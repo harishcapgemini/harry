@@ -7,13 +7,39 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background: linear-gradient(135deg, #1a0033 0%, #330033 25%, #660033 50%, #330066 75%, #000033 100%);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 0, 0, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(255, 0, 0, 0.03) 3px
+        );
+    pointer-events: none;
+    animation: scanlines 8s linear infinite;
+    z-index: 2;
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
 }
 
 @keyframes gradientShift {
@@ -125,13 +151,17 @@ body {
 }
 
 .content {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(20, 5, 35, 0.95);
     padding: 60px 40px;
     border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 0, 64, 0.3),
+        inset 0 0 30px rgba(255, 0, 100, 0.1);
     text-align: center;
     backdrop-filter: blur(10px);
     animation: slideIn 1s ease-out;
+    border: 2px solid rgba(255, 0, 100, 0.3);
 }
 
 @keyframes slideIn {
@@ -152,11 +182,238 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Stranger Things inspired styles */
+.stranger-title {
+    margin-bottom: 40px;
+}
+
+.glitch {
+    position: relative;
+    color: #ff0040;
+    text-shadow: 
+        0 0 10px #ff0040,
+        0 0 20px #ff0040,
+        0 0 30px #ff0040,
+        0 0 40px #ff0040;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #00fff9;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 
+            0 0 10px #ff0040,
+            0 0 20px #ff0040,
+            0 0 30px #ff0040;
+    }
+    25% {
+        text-shadow: 
+            0 0 10px #00fff9,
+            0 0 20px #00fff9,
+            0 0 30px #00fff9;
+    }
+    50% {
+        text-shadow: 
+            0 0 10px #ff00c1,
+            0 0 20px #ff00c1,
+            0 0 30px #ff00c1;
+    }
+    75% {
+        text-shadow: 
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #fff;
+    }
+    100% {
+        text-shadow: 
+            0 0 10px #ff0040,
+            0 0 20px #ff0040,
+            0 0 30px #ff0040;
+    }
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(31px, 9999px, 94px, 0);
+    }
+    20% {
+        clip: rect(85px, 9999px, 140px, 0);
+    }
+    40% {
+        clip: rect(10px, 9999px, 45px, 0);
+    }
+    60% {
+        clip: rect(65px, 9999px, 95px, 0);
+    }
+    80% {
+        clip: rect(5px, 9999px, 90px, 0);
+    }
+    100% {
+        clip: rect(55px, 9999px, 105px, 0);
+    }
+}
+
+.subtitle {
+    color: #00fff9;
+    font-size: 1.1em;
+    font-style: italic;
+    text-shadow: 0 0 10px #00fff9;
+    animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9;
+    }
+    20%, 24%, 55% {        
+        opacity: 0.4;
+        text-shadow: none;
+    }
+}
+
+.neon-text {
+    color: #ff006e;
+    text-shadow: 
+        0 0 5px #ff006e,
+        0 0 10px #ff006e,
+        0 0 20px #ff006e,
+        0 0 40px #ff006e;
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 5px #ff006e,
+            0 0 10px #ff006e,
+            0 0 20px #ff006e,
+            0 0 40px #ff006e;
+    }
+    50% {
+        text-shadow: 
+            0 0 2px #ff006e,
+            0 0 5px #ff006e,
+            0 0 10px #ff006e,
+            0 0 20px #ff006e;
+    }
+}
+
+.stranger-glow {
+    animation: strangerGlow 3s ease-in-out infinite !important;
+}
+
+@keyframes strangerGlow {
+    0%, 100% {
+        color: #ff1744;
+        text-shadow: 
+            0 0 10px #ff1744,
+            0 0 20px #ff1744,
+            0 0 30px #ff1744,
+            0 0 40px #ff0040,
+            0 0 70px #ff0040;
+    }
+    50% {
+        color: #00fff9;
+        text-shadow: 
+            0 0 10px #00fff9,
+            0 0 20px #00fff9,
+            0 0 30px #00fff9,
+            0 0 40px #00fff9,
+            0 0 70px #00fff9;
+    }
+}
+
+.demogorgon-warning {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff0040;
+    border-radius: 10px;
+    animation: warningBlink 1s infinite;
+}
+
+.demogorgon-warning p {
+    color: #ff0040;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 0 0 5px #ff0040;
+}
+
+@keyframes warningBlink {
+    0%, 49% {
+        border-color: #ff0040;
+        box-shadow: 0 0 10px #ff0040;
+    }
+    50%, 100% {
+        border-color: #ff6b9d;
+        box-shadow: 0 0 10px #ff6b9d;
+    }
+}
+
+.retro-glow {
+    animation: retroGlow 2s ease-in-out infinite !important;
+}
+
+@keyframes retroGlow {
+    0%, 100% {
+        color: #ff006e;
+        text-shadow: 
+            0 0 10px #ff006e,
+            0 0 20px #ff006e,
+            0 0 40px #ff006e;
+    }
+    33% {
+        color: #00fff9;
+        text-shadow: 
+            0 0 10px #00fff9,
+            0 0 20px #00fff9,
+            0 0 40px #00fff9;
+    }
+    66% {
+        color: #7b2cbf;
+        text-shadow: 
+            0 0 10px #7b2cbf,
+            0 0 20px #7b2cbf,
+            0 0 40px #7b2cbf;
+    }
+}
+
+.small-text {
+    font-size: 0.9em;
+    color: #ddd !important;
+    margin-top: 10px;
+}
+
 .content p {
-    color: #555;
+    color: #e0e0e0;
     font-size: 1.3em;
     margin: 20px 0;
     line-height: 1.6;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .fade-in {
@@ -205,9 +462,10 @@ body {
 }
 
 .question h2 {
-    color: #666;
+    color: #00fff9;
     font-size: 1.5em;
     margin-bottom: 20px;
+    text-shadow: 0 0 10px #00fff9;
 }
 
 .main-question {
@@ -246,13 +504,19 @@ button {
 }
 
 .yes-btn {
-    background: linear-gradient(135deg, #ff6b9d, #c06c84);
+    background: linear-gradient(135deg, #ff0040, #ff006e);
     color: white;
+    box-shadow: 
+        0 5px 15px rgba(255, 0, 100, 0.4),
+        0 0 20px rgba(255, 0, 100, 0.3);
 }
 
 .yes-btn:hover {
     transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+    box-shadow: 
+        0 10px 25px rgba(255, 0, 100, 0.6),
+        0 0 30px rgba(255, 0, 100, 0.5);
+    animation: neonPulse 1s ease-in-out infinite;
 }
 
 .no-btn {
@@ -267,13 +531,17 @@ button {
 
 .celebration {
     display: none;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(20, 5, 35, 0.95);
     padding: 60px 40px;
     border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 255, 249, 0.3),
+        inset 0 0 30px rgba(0, 255, 249, 0.1);
     text-align: center;
     backdrop-filter: blur(10px);
     animation: celebrationPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 2px solid rgba(0, 255, 249, 0.3);
 }
 
 @keyframes celebrationPop {
@@ -303,24 +571,29 @@ button {
 }
 
 .celebration-subtext {
-    color: #666;
+    color: #e0e0e0;
     font-size: 1.5em;
     margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .love-message {
-    background: linear-gradient(135deg, #ffeef8, #ffe0f0);
+    background: linear-gradient(135deg, rgba(123, 44, 191, 0.3), rgba(255, 0, 110, 0.3));
     padding: 30px;
     border-radius: 20px;
     margin: 30px 0;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 0, 110, 0.2);
+    border: 1px solid rgba(255, 0, 110, 0.3);
 }
 
 .love-message p {
-    color: #c06c84;
+    color: #ff006e;
     font-size: 1.4em;
     font-weight: bold;
     margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
 }
 
 .love-message ul {
@@ -329,11 +602,12 @@ button {
 }
 
 .love-message li {
-    color: #666;
+    color: #e0e0e0;
     font-size: 1.2em;
     margin: 15px 0;
     padding-left: 30px;
     position: relative;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
 .love-message li:before {
@@ -343,11 +617,15 @@ button {
 }
 
 .date-plan {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #1a0033, #330066);
     padding: 30px;
     border-radius: 20px;
     color: white;
     margin-top: 30px;
+    border: 2px solid #00fff9;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 249, 0.3),
+        inset 0 0 20px rgba(0, 255, 249, 0.1);
 }
 
 .date-plan h3 {
@@ -358,6 +636,7 @@ button {
 .date-plan p {
     font-size: 1.3em;
     color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Confetti animation */
